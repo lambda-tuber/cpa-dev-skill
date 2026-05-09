@@ -111,14 +111,14 @@ cpa-dev-skill/
 ## Initialization Flow
 
 ```
-┌──────────────────────────────────────────────────────┐
-│  1. Fill templates/AGENTS.md  →  project/AGENTS.md   │
-│  2. Copy docs/, prompts/, adapters/ → project/        │
-│  3. Copy templates/backlog/         → project/backlog/│
-│  4. Read docs/cpa-core-vocabulary.md (shared vocab)  │
-│  5. Select adapter from adapters/<language>/          │
-│  6. Start PB-0001 with AI agent                       │
-└──────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│  1. Fill templates/AGENTS.md  →  project/AGENTS.md     │
+│  2. Copy docs/, prompts/, adapters/ → project/         │
+│  3. Copy templates/backlog/         → project/backlog/ │
+│  4. Read docs/cpa-core-vocabulary.md (shared vocab)    │
+│  5. Select adapter from adapters/<language>/           │
+│  6. Start PB-0001 with AI agent                        │
+└────────────────────────────────────────────────────────┘
 ```
 
 See [SKILL.md](SKILL.md) for the detailed step-by-step procedure.
@@ -140,18 +140,6 @@ Each adapter document explains:
 | Language | Status | Location |
 |----------|--------|----------|
 | Haskell | Available | `adapters/haskell/` |
-| Rust | Future | `adapters/rust/` |
-
----
-
-## Contributing
-
-Contributions of new adapters, prompt improvements, and example flows are welcome.
-
-- **New adapter**: Create `adapters/<language>/README.md` following the structure
-  in [`adapters/README.md`](adapters/README.md).
-- **Prompt improvement**: Propose changes to files in `prompts/`.
-- **Example**: Add sample initialization flows under `examples/` (populated by CR-12).
 
 ---
 
@@ -162,3 +150,11 @@ Contributions of new adapters, prompt improvements, and example flows are welcom
 - [CPA Core Vocabulary](docs/cpa-core-vocabulary.md)
 - [SKILL.md](SKILL.md)
 - [AGENTS.md template](templates/AGENTS.md)
+
+---
+
+## Credits & License
+
+- **Execution & Process Lead:** Sonnet 4.6, Gemini 3 Flash, GPT-5.5
+- **Direction & Policy:** lambda-tuber
+- **License:** MIT -- see [LICENSE](./LICENSE)
