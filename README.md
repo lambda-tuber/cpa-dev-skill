@@ -50,19 +50,23 @@ _where_ a concept belongs cause the most friction. CPA addresses this directly:
    Code or GitHub Copilot, copy `templates/CLAUDE.md` or
    `templates/.github/copilot-instructions.md` to the corresponding target path.
 
-3. **Copy `docs/`, `prompts/`, and `adapters/`** into your target project.
+3. **Copy `docs/` and `prompts/`** into your target project.
    The instruction files use repository-relative paths such as `docs/...`,
-   `prompts/...`, and `adapters/<language>/...`, so these directories must be
+   and `prompts/...`, so these directories must be
    available from the target project root.
 
-4. **Copy `templates/backlog/`** into your target project to initialize the backlog.
+4. **Copy `templates/backlog/BACKLOG.md` and `templates/backlog/STATUS.md`**
+   into your target project to initialize the backlog. PB folders and CR files
+   are created later by the PB Open and CR Open phases.
 
-5. **Pick an adapter** from `adapters/<language>/` that matches your project's
-   language and copy its CPA Convergence section into your `AGENTS.md`.
+5. **Pick an adapter** from
+   `skills/cpa-dev-skill/adapters/<language>/` that matches your project's
+   language and merge its CPA Convergence section into your `AGENTS.md`.
+   Do not copy the `adapters/` directory into the target project by default.
 
 6. **Open an AI agent session** with `AGENTS.md` loaded, then instruct the agent:
    ```
-   Read prompts/pb_iteration.md and open PB-0001.
+   Read prompts/pb_iteration.md and prepare to open the first PB.
    ```
 
 For the full step-by-step guide, see [SKILL.md](SKILL.md).
@@ -113,11 +117,11 @@ cpa-dev-skill/
 ```
 ┌────────────────────────────────────────────────────────┐
 │  1. Fill templates/AGENTS.md  →  project/AGENTS.md     │
-│  2. Copy docs/, prompts/, adapters/ → project/         │
-│  3. Copy templates/backlog/         → project/backlog/ │
+│  2. Copy docs/, prompts/           → project/          │
+│  3. Copy BACKLOG.md, STATUS.md     → project/backlog/  │
 │  4. Read docs/cpa-core-vocabulary.md (shared vocab)    │
-│  5. Select adapter from adapters/<language>/           │
-│  6. Start PB-0001 with AI agent                        │
+│  5. Merge adapter guidance into AGENTS.md              │
+│  6. Prepare the first PB iteration with the AI agent   │
 └────────────────────────────────────────────────────────┘
 ```
 

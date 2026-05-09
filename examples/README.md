@@ -15,9 +15,10 @@ CR-12 validates a sample Haskell initialization flow:
 
 - A worked example of filling `templates/AGENTS.md` for a Haskell project
 - Optional tool-specific instructions for Claude Code and GitHub Copilot
-- A sample first PB and CR created from `templates/backlog/`
-- Local copies of `docs/`, `prompts/`, and `adapters/` so generated instruction
+- Initial `BACKLOG.md` and `STATUS.md` created from `templates/backlog/`
+- Local copies of `docs/` and `prompts/` so generated instruction
   files resolve their repository-relative references
+- Haskell adapter guidance merged into the root `AGENTS.md`
 - Verification that the resulting structure enables CPA-compliant iteration
 
 ## Sample Project
@@ -33,8 +34,10 @@ examples/sample-haskell-cpa-project/
 The CR-12 validation checks:
 
 - Generated instruction files have their core placeholders filled.
-- `docs/`, `prompts/`, and `adapters/haskell/` exist in the sample project.
+- `docs/` and `prompts/` exist in the sample project.
+- No project-local `adapters/` directory is created by default.
 - `prompts/pb_iteration.md` is available as the workflow entrypoint.
-- `backlog/PB-0001/CR-0001.md` exists, proving the PB/CR workflow can start.
+- `backlog/BACKLOG.md` and `backlog/STATUS.md` exist as the initial backlog.
+- No PB folder or CR file exists until the PB Open or CR Open phase creates it.
 - Legacy template names and stale CR-09/CR-10 placeholder status text have been
   removed from the skill documentation.

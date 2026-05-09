@@ -35,7 +35,6 @@ target project folder specified by the user.
 ├── AGENTS.md            ← you will create this
 ├── docs/                ← you will create this
 ├── prompts/             ← you will create this
-├── adapters/            ← you will create this
 ├── backlog/             ← you will create this
 └── work/                ← you will create this (application / library development)
 ```
@@ -151,50 +150,51 @@ cp <project>/skills/cpa-dev-skill/templates/.github/copilot-instructions.md \
 
 ### Step 2 — Copy shared CPA assets
 
-Copy the shared documentation, prompt set, and adapters into the project root.
+Copy the shared documentation and prompt set into the project root.
 The generated instruction files use repository-relative paths such as
-`docs/...`, `prompts/...`, and `adapters/<language>/...`.
+`docs/...` and `prompts/...`.
+
+Do not copy the `adapters/` directory into the target project by default.
+Adapter content is used as source material while filling the CPA Convergence
+section in `AGENTS.md`; the selected adapter guidance is merged into
+`AGENTS.md` rather than kept as a separate project-local adapter folder.
 
 ```
 # PowerShell
 Copy-Item -Recurse <project>\skills\cpa-dev-skill\docs     <project>\docs
 Copy-Item -Recurse <project>\skills\cpa-dev-skill\prompts  <project>\prompts
-Copy-Item -Recurse <project>\skills\cpa-dev-skill\adapters <project>\adapters
 
 # Unix
 cp -R <project>/skills/cpa-dev-skill/docs     <project>/docs
 cp -R <project>/skills/cpa-dev-skill/prompts  <project>/prompts
-cp -R <project>/skills/cpa-dev-skill/adapters <project>/adapters
 ```
 
 ### Step 3 — Initialize the backlog and work folder
 
 Create the `work` folder (where application / library source code will be placed)
-and copy the backlog templates into the project:
+and copy only the root backlog templates into the project:
 
 ```
 # PowerShell
 New-Item -ItemType Directory -Force <project>\work
 New-Item -ItemType Directory -Force <project>\backlog
-New-Item -ItemType Directory -Force <project>\backlog\PB-0001
 Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\BACKLOG.md   <project>\backlog\BACKLOG.md
 Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\STATUS.md    <project>\backlog\STATUS.md
-Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\PB-STATUS.md <project>\backlog\PB-0001\PB-STATUS.md
-Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\CR-XXXX.md   <project>\backlog\PB-0001\CR-0001.md
 
 # Unix
-mkdir -p <project>/work
-mkdir -p <project>/backlog/PB-0001
+mkdir -p <project>/work <project>/backlog
 cp <project>/skills/cpa-dev-skill/templates/backlog/BACKLOG.md   <project>/backlog/BACKLOG.md
 cp <project>/skills/cpa-dev-skill/templates/backlog/STATUS.md    <project>/backlog/STATUS.md
-cp <project>/skills/cpa-dev-skill/templates/backlog/PB-STATUS.md <project>/backlog/PB-0001/PB-STATUS.md
-cp <project>/skills/cpa-dev-skill/templates/backlog/CR-XXXX.md   <project>/backlog/PB-0001/CR-0001.md
 ```
 
 > **Note:** The `work/` folder is where the actual application, middleware, or
 > library source trees will be created during development. It is referenced in
 > `AGENTS.md` under `# Project Folder`. Creating it now ensures the folder
 > structure matches what AGENTS.md declares.
+>
+> PB folders are created later by the PB Open phase. CR files are created later
+> by the CR Open phase. Initial backlog setup intentionally contains only
+> `backlog/BACKLOG.md` and `backlog/STATUS.md`.
 
 ### Step 4 — Reference the CPA Core Vocabulary
 
@@ -208,20 +208,28 @@ user share the following minimum vocabulary before proceeding:
 
 ### Step 5 — Select or create an adapter
 
-Check `<project>/adapters/` for a folder matching the target language.
+Check `<project>/skills/cpa-dev-skill/adapters/` for a folder matching the
+target language.
 
-- **If an adapter exists**: Read `adapters/<language>/README.md` and copy the
-  CPA Convergence section into `AGENTS.md` (replacing the placeholder block).
-- **If no adapter exists**: Create `adapters/<language>/README.md` following the
-  structure described in `adapters/README.md`, then fill the CPA Convergence
-  section in `AGENTS.md` accordingly.
+- **If an adapter exists**: Read
+  `<project>/skills/cpa-dev-skill/adapters/<language>/README.md` and
+  `<project>/skills/cpa-dev-skill/adapters/<language>/AGENTS.md`, then merge
+  the relevant CPA Convergence guidance into `AGENTS.md` (replacing the
+  placeholder block).
+- **If no adapter exists**: Draft the CPA Convergence section directly in
+  `AGENTS.md` using `<project>/skills/cpa-dev-skill/adapters/README.md` as the
+  authoring guide. Create a reusable adapter folder only when the user
+  explicitly asks for one.
 
 ### Step 6 — Start the first PB iteration
 
-Instruct yourself to read `prompts/pb_iteration.md` and begin PB-0001.
+Instruct yourself to read `prompts/pb_iteration.md` and ask the user whether to
+open the first PB. When the user explicitly starts the PB Open phase, create the
+PB folder and `PB-STATUS.md` from the backlog templates. When the user
+explicitly starts the CR Open phase, create the corresponding `CR-XXXX.md`.
 
 ```
-Read <project>/prompts/pb_iteration.md and open PB-0001.
+Read <project>/prompts/pb_iteration.md and prepare to open the first PB.
 ```
 
 ---
@@ -233,11 +241,15 @@ Report the full verification result to the user.
 
 - [ ] `<project>/AGENTS.md` exists and contains no unfilled `{{PLACEHOLDER}}` values
       (except `{{HOMEPAGE_URL}}` and `{{REPOSITORY_URL}}` if intentionally left as `(TBD)`).
-- [ ] `<project>/docs/`, `<project>/prompts/`, and `<project>/adapters/` exist.
+- [ ] `<project>/docs/` and `<project>/prompts/` exist.
+- [ ] `<project>/adapters/` does not exist unless the user explicitly requested
+      a project-local reusable adapter.
 - [ ] `<project>/work/` exists.
 - [ ] `<project>/backlog/BACKLOG.md` and `<project>/backlog/STATUS.md` exist.
-- [ ] `<project>/backlog/PB-0001/PB-STATUS.md` and `<project>/backlog/PB-0001/CR-0001.md` exist.
-- [ ] You have loaded `<project>/AGENTS.md` into your context and started PB-0001.
+- [ ] No PB folder or CR file was created during initialization unless the user
+      explicitly instructed the PB Open or CR Open phase.
+- [ ] You have loaded `<project>/AGENTS.md` into your context and read
+      `<project>/prompts/pb_iteration.md`.
 
 ---
 

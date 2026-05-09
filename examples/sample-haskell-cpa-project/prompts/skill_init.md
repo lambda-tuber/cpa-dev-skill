@@ -41,7 +41,7 @@ values:
 | `{{COPILOT_TOOL_NOTES}}` | Optional GitHub Copilot tool notes |
 
 Then fill the **CPA Convergence** section from the matching adapter:
-`adapters/<language>/AGENTS.md`
+`skills/cpa-dev-skill/adapters/<language>/AGENTS.md`
 
 If the project also uses Claude Code or GitHub Copilot, copy the corresponding
 tool-specific template:
@@ -54,27 +54,31 @@ cp templates/.github/copilot-instructions.md <project>/.github/copilot-instructi
 
 ### Step 2 — Copy shared CPA assets
 
-Copy `docs/`, `prompts/`, and `adapters/` into the target project so that
+Copy `docs/` and `prompts/` into the target project so that
 repository-relative references in `AGENTS.md`, `CLAUDE.md`, and Copilot
 instructions resolve locally:
 
 ```
 cp -R docs     <project>/docs
 cp -R prompts  <project>/prompts
-cp -R adapters <project>/adapters
 ```
+
+Do not copy `adapters/` into the target project by default. The selected
+adapter is merged into the root `AGENTS.md` during initialization.
 
 ### Step 3 — Initialize the backlog
 
-Copy `templates/backlog/` into the target project:
+Create `backlog/` and copy only the root backlog templates into the target
+project:
 
 ```
+mkdir -p <project>/backlog
 cp templates/backlog/BACKLOG.md    <project>/backlog/BACKLOG.md
 cp templates/backlog/STATUS.md     <project>/backlog/STATUS.md
-mkdir <project>/backlog/PB-0001
-cp templates/backlog/PB-STATUS.md  <project>/backlog/PB-0001/PB-STATUS.md
-cp templates/backlog/CR-XXXX.md    <project>/backlog/PB-0001/CR-0001.md
 ```
+
+PB folders are created by the PB Open phase. CR files are created by the CR
+Open phase.
 
 ### Step 4 — Confirm shared CPA vocabulary
 
@@ -90,19 +94,22 @@ share these four terms before starting development:
 
 ### Step 5 — Select or create an adapter
 
-Check `adapters/` for a folder matching the target language.
+Check `skills/cpa-dev-skill/adapters/` for a folder matching the target
+language.
 
-- **Adapter exists** → Read `adapters/<language>/README.md` and copy the CPA
-  Convergence section into `AGENTS.md`.
-- **No adapter yet** → Create `adapters/<language>/README.md` following the
-  structure in `adapters/README.md`, then fill `AGENTS.md` accordingly.
+- **Adapter exists** → Read `skills/cpa-dev-skill/adapters/<language>/README.md`
+  and `skills/cpa-dev-skill/adapters/<language>/AGENTS.md`, then merge the CPA
+  Convergence guidance into `AGENTS.md`.
+- **No adapter yet** → Draft the CPA Convergence section directly in
+  `AGENTS.md` using `skills/cpa-dev-skill/adapters/README.md` as the authoring
+  guide. Create a reusable adapter folder only if the user explicitly asks.
 
 ### Step 6 — Open the AI agent session
 
 Load `AGENTS.md` into the AI agent session. Then instruct the agent:
 
 ```
-Read prompts/pb_iteration.md and open PB-0001.
+Read prompts/pb_iteration.md and prepare to open the first PB.
 ```
 
 ---
@@ -111,10 +118,13 @@ Read prompts/pb_iteration.md and open PB-0001.
 
 - [ ] `AGENTS.md` exists in the target project with all placeholders filled,
       including `PROJECT_SCALE`, `PROJECT_CATEGORY`, and `TOOL_INVOCATION_POLICY`.
-- [ ] `docs/`, `prompts/`, and `adapters/` exist in the target project.
+- [ ] `docs/` and `prompts/` exist in the target project.
+- [ ] `adapters/` does not exist in the target project unless the user
+      explicitly requested a project-local reusable adapter.
 - [ ] `backlog/BACKLOG.md` and `backlog/STATUS.md` exist.
-- [ ] At least one PB folder with `PB-STATUS.md` and one `CR-XXXX.md` exists.
-- [ ] The AI agent has loaded `AGENTS.md` and started the first PB iteration.
+- [ ] No PB folder or CR file was created during initialization unless the user
+      explicitly instructed the PB Open or CR Open phase.
+- [ ] The AI agent has loaded `AGENTS.md` and read the PB iteration prompt.
 
 ---
 

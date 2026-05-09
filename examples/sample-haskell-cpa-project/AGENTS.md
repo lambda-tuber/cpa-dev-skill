@@ -83,8 +83,8 @@ Do not proceed autonomously to the next step without explicit instruction from t
 # CPA Convergence
 
 This section defines how CPA layer boundaries are applied in Haskell for this
-sample project. The mapping follows `adapters/haskell/AGENTS.md` for a small
-scale project.
+sample project. The mapping was merged from
+`skills/cpa-dev-skill/adapters/haskell/AGENTS.md` for a small scale project.
 
 ## Layer Mapping for Haskell
 

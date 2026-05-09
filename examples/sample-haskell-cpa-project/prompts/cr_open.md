@@ -6,7 +6,7 @@
 2. ⚠️ **Confirmation required**: Show the CR list from `PB-STATUS.md` and ask:
    "Shall we start CR-XXXX?" — wait for approval before proceeding.
 3. Update the CR list in `PB-STATUS.md` and set the CR status to **In Progress**.
-4. Create the CR file (e.g. `backlog/PB-0001/CR-01.md`).
+4. Create the CR file (e.g. `backlog/PB-0001/CR-0001.md`).
 
 ## CR-XXXX.md Format
 

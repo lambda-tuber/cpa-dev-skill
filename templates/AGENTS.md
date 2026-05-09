@@ -84,11 +84,12 @@ Do not proceed autonomously to the next step without explicit instruction from t
 
 This section defines how CPA layer boundaries are applied in the specific language
 and toolchain used by this project. Fill in the details from the appropriate adapter
-in `adapters/{{TARGET_LANGUAGE}}/`.
+in `skills/cpa-dev-skill/adapters/{{TARGET_LANGUAGE}}/`, then keep the merged
+guidance here in this root `AGENTS.md`.
 
 ## Layer Mapping for {{TARGET_LANGUAGE}}
 
-<!-- Replace with content from adapters/{{TARGET_LANGUAGE}}/AGENTS.md -->
+<!-- Replace with content from skills/cpa-dev-skill/adapters/{{TARGET_LANGUAGE}}/AGENTS.md -->
 
 | CPA Layer | Module / Package | Notes |
 |-----------|-----------------|-------|

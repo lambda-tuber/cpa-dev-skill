@@ -71,8 +71,8 @@ Apply CPA layer boundaries according to the selected adapter:
 - Project profile: `docs/cpa-project-profile.md`
 - Language adapter: `adapters/haskell/`
 
-The concrete mapping follows `adapters/haskell/AGENTS.md` for a small scale
-project.
+The concrete mapping was merged from
+`skills/cpa-dev-skill/adapters/haskell/AGENTS.md` for a small scale project.
 
 | CPA Layer | Module / Package | Notes |
 |-----------|------------------|-------|
