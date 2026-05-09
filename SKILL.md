@@ -1,17 +1,114 @@
 # SKILL: Start CPA-compliant development for \<project\>
 
+---
+
+## How to Use This Skill
+
+> **This section is addressed to the AI agent reading this file.**
+
+You have received this `SKILL.md` as a file attachment in a chat message.
+Your role is to initialize a CPA-compliant development environment in the
+target project folder specified by the user.
+
+**What you must do:**
+
+1. Read **Before You Begin** below and ask the user the minimum required questions
+   (at most 3). Do not ask for information you can infer or default.
+2. Use your file tools (e.g. `pty-mcp-server` MCP tools) to copy and generate
+   files directly inside the project folder. Do not just give instructions —
+   actually create the files.
+3. Follow **Steps 1–6** in order.
+4. When done, verify the **Exit Conditions** using your file tools and report
+   the result to the user.
+
+**Assumed layout:**
+
+```
+<project>/               ← project folder specified by the user
+├── skills/
+│   └── cpa-dev-skill/   ← this repository, already cloned here
+│       ├── SKILL.md     ← this file
+│       ├── templates/
+│       ├── prompts/
+│       ├── adapters/
+│       └── docs/
+├── AGENTS.md            ← you will create this
+├── docs/                ← you will create this
+├── prompts/             ← you will create this
+├── adapters/            ← you will create this
+├── backlog/             ← you will create this
+└── work/                ← you will create this (application / library development)
+```
+
+---
+
 ## Trigger
 
 Use this skill when starting CPA-compliant iterative development on a new or
 existing project. This skill initializes the repository structure needed for
 human-AI collaborative development based on Core Projection Architecture (CPA).
 
+---
+
 ## Preconditions
 
-- This repository (`cpa-dev-skill`) is available locally or cloned.
-- The target project repository exists (or a new directory has been created).
-- The language / toolchain for the project is known.
-- An appropriate adapter exists in `adapters/<language>/`, or you will create one.
+- The target project folder exists at the path specified by the user
+  (e.g. `c:\work\prj_sample`).
+- `cpa-dev-skill` is already cloned at `<project>/skills/cpa-dev-skill/`.
+  All of `docs/`, `prompts/`, `templates/`, `adapters/` are present inside
+  that clone.
+- Claude Desktop is running with `pty-mcp-server` MCP configured and active.
+- The language / toolchain for the project is known (or will be confirmed in
+  **Before You Begin**).
+
+---
+
+## Before You Begin
+
+Before starting the steps, confirm the following with the user.
+Ask only what you cannot infer. Combine all questions into a single message.
+
+### Confirm (ask if not already stated)
+
+1. **Project folder path** — The absolute path to the project root
+   (e.g. `c:\work\prj_sample`). If stated in the user's message, use it directly.
+
+2. **Project name** — Defaults to the folder name (e.g. `prj_sample`).
+   Propose the default and ask the user to confirm or correct it.
+
+3. **Language / toolchain** — The primary programming language
+   (e.g. `Haskell`, `Rust`, `Python`). If stated, use it directly.
+
+### Infer automatically (do not ask)
+
+Use the confirmed values above to fill these placeholders without asking:
+
+| Placeholder | How to infer |
+|-------------|-------------|
+| `{{WORKSPACE_PATH}}` | Project folder path (from question 1) |
+| `{{PROJECT_NAME}}` | Confirmed project name (from question 2) |
+| `{{PROJECT_ROLE}}` | `"the developer of {{PROJECT_NAME}}"` |
+| `{{TARGET_LANGUAGE}}` | Confirmed language (from question 3) |
+| `{{BUILD_COMMAND}}` / `{{TEST_COMMAND}}` | Read from `adapters/<language>/README.md` |
+| `{{PROJECT_SCALE}}` | Default to `small` — note that the user can change it later |
+| `{{PROJECT_CATEGORY}}` | Default to `software` — note that the user can change it later |
+| `{{TOOL_INVOCATION_POLICY}}` | Use the default text below |
+| `{{CODEX_TOOL_NOTES}}` | Leave empty or omit |
+| `{{CLAUDE_TOOL_NOTES}}` | Leave empty or omit |
+| `{{COPILOT_TOOL_NOTES}}` | Leave empty or omit |
+
+**Default `{{TOOL_INVOCATION_POLICY}}` text for Claude Desktop + pty-mcp-server:**
+
+```
+File system operations are performed via pty-mcp-server MCP tools
+(pms-read-file, pms-write-file, pms-patch-file, pms-list-dir, pms-make-dir).
+Shell commands are run via agent-proc-run / agent-proc-read / agent-proc-write.
+Always confirm with the user before running destructive or irreversible operations.
+Do not proceed autonomously to the next iteration phase without explicit user instruction.
+```
+
+**For `{{HOMEPAGE_URL}}` and `{{REPOSITORY_URL}}`:***
+Leave as `(TBD)` and add a comment: `# Fill in after the repository is created`.
 
 ---
 
@@ -19,70 +116,90 @@ human-AI collaborative development based on Core Projection Architecture (CPA).
 
 ### Step 1 — Fill templates/AGENTS.md
 
-Copy `templates/AGENTS.md` into the root of the target project as `AGENTS.md`.
-Open it and replace every `{{PLACEHOLDER}}` with project-specific values:
-
-| Placeholder | Description |
-|-------------|-------------|
-| `{{PROJECT_NAME}}` | Name of the project (e.g. `my-library`) |
-| `{{PROJECT_ROLE}}` | AI agent role description (e.g. `the developer of my-library`) |
-| `{{HOMEPAGE_URL}}` | Project homepage or package registry URL |
-| `{{REPOSITORY_URL}}` | GitHub / VCS repository URL |
-| `{{TARGET_LANGUAGE}}` | Primary programming language (e.g. `haskell`, `rust`) |
-| `{{WORKSPACE_PATH}}` | Absolute local path to the project workspace |
-| `{{BUILD_COMMAND}}` | Build command (e.g. `cabal build`, `cargo build`) |
-| `{{TEST_COMMAND}}` | Test command (e.g. `cabal test`, `cargo test`) |
-| `{{PROJECT_SCALE}}` | Project scale: `small` / `medium` / `large`. See `docs/cpa-project-profile.md`. |
-| `{{PROJECT_CATEGORY}}` | Project category: `system` / `software` / `other`. See `docs/cpa-project-profile.md`. |
-| `{{TOOL_INVOCATION_POLICY}}` | Tool, shell, MCP, sandbox, and approval rules for the target agent environment. |
-| `{{CODEX_TOOL_NOTES}}` | Optional Codex / agent-style tool notes. |
-| `{{CLAUDE_TOOL_NOTES}}` | Optional Claude Code tool notes. |
-| `{{COPILOT_TOOL_NOTES}}` | Optional GitHub Copilot tool notes. |
-
-Fill the **CPA Convergence** section using the matching adapter:
-`adapters/{{TARGET_LANGUAGE}}/AGENTS.md`
-
-If the project also uses Claude Code or GitHub Copilot, copy the corresponding
-tool-specific template as well:
+Copy `templates/AGENTS.md` from the skill folder into the project root as `AGENTS.md`,
+then replace every `{{PLACEHOLDER}}` with the values confirmed in **Before You Begin**.
 
 ```
-cp templates/CLAUDE.md <project>/CLAUDE.md
+# Windows (PowerShell)
+Copy-Item <project>\skills\cpa-dev-skill\templates\AGENTS.md <project>\AGENTS.md
+
+# Unix / Git Bash
+cp <project>/skills/cpa-dev-skill/templates/AGENTS.md <project>/AGENTS.md
+```
+
+Open the copied file and fill placeholders using the table in **Before You Begin**.
+
+Fill the **CPA Convergence** section using the matching adapter:
+`<project>/skills/cpa-dev-skill/adapters/<language>/AGENTS.md`
+
+If the project also uses Claude Code or GitHub Copilot, copy the corresponding
+tool-specific templates as well:
+
+```
+# PowerShell
+Copy-Item <project>\skills\cpa-dev-skill\templates\CLAUDE.md <project>\CLAUDE.md
+New-Item -ItemType Directory -Force <project>\.github
+Copy-Item <project>\skills\cpa-dev-skill\templates\.github\copilot-instructions.md `
+          <project>\.github\copilot-instructions.md
+
+# Unix
+cp <project>/skills/cpa-dev-skill/templates/CLAUDE.md <project>/CLAUDE.md
 mkdir -p <project>/.github
-cp templates/.github/copilot-instructions.md <project>/.github/copilot-instructions.md
+cp <project>/skills/cpa-dev-skill/templates/.github/copilot-instructions.md \
+   <project>/.github/copilot-instructions.md
 ```
 
 ### Step 2 — Copy shared CPA assets
 
-Copy the shared documentation, prompt set, and adapters into the target project.
-The generated instruction files refer to these paths from the project root.
+Copy the shared documentation, prompt set, and adapters into the project root.
+The generated instruction files use repository-relative paths such as
+`docs/...`, `prompts/...`, and `adapters/<language>/...`.
 
 ```
-cp -R docs     <project>/docs
-cp -R prompts  <project>/prompts
-cp -R adapters <project>/adapters
+# PowerShell
+Copy-Item -Recurse <project>\skills\cpa-dev-skill\docs     <project>\docs
+Copy-Item -Recurse <project>\skills\cpa-dev-skill\prompts  <project>\prompts
+Copy-Item -Recurse <project>\skills\cpa-dev-skill\adapters <project>\adapters
+
+# Unix
+cp -R <project>/skills/cpa-dev-skill/docs     <project>/docs
+cp -R <project>/skills/cpa-dev-skill/prompts  <project>/prompts
+cp -R <project>/skills/cpa-dev-skill/adapters <project>/adapters
 ```
 
-### Step 3 — Initialize the backlog
+### Step 3 — Initialize the backlog and work folder
 
-Copy the contents of `templates/backlog/` into the target project:
-
-```
-cp templates/backlog/BACKLOG.md    <project>/backlog/BACKLOG.md
-cp templates/backlog/STATUS.md     <project>/backlog/STATUS.md
-```
-
-For the first PB, create a PB folder and copy the per-PB templates:
+Create the `work` folder (where application / library source code will be placed)
+and copy the backlog templates into the project:
 
 ```
-mkdir <project>/backlog/PB-0001
-cp templates/backlog/PB-STATUS.md  <project>/backlog/PB-0001/PB-STATUS.md
-cp templates/backlog/CR-XXXX.md    <project>/backlog/PB-0001/CR-0001.md
+# PowerShell
+New-Item -ItemType Directory -Force <project>\work
+New-Item -ItemType Directory -Force <project>\backlog
+New-Item -ItemType Directory -Force <project>\backlog\PB-0001
+Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\BACKLOG.md   <project>\backlog\BACKLOG.md
+Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\STATUS.md    <project>\backlog\STATUS.md
+Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\PB-STATUS.md <project>\backlog\PB-0001\PB-STATUS.md
+Copy-Item <project>\skills\cpa-dev-skill\templates\backlog\CR-XXXX.md   <project>\backlog\PB-0001\CR-0001.md
+
+# Unix
+mkdir -p <project>/work
+mkdir -p <project>/backlog/PB-0001
+cp <project>/skills/cpa-dev-skill/templates/backlog/BACKLOG.md   <project>/backlog/BACKLOG.md
+cp <project>/skills/cpa-dev-skill/templates/backlog/STATUS.md    <project>/backlog/STATUS.md
+cp <project>/skills/cpa-dev-skill/templates/backlog/PB-STATUS.md <project>/backlog/PB-0001/PB-STATUS.md
+cp <project>/skills/cpa-dev-skill/templates/backlog/CR-XXXX.md   <project>/backlog/PB-0001/CR-0001.md
 ```
+
+> **Note:** The `work/` folder is where the actual application, middleware, or
+> library source trees will be created during development. It is referenced in
+> `AGENTS.md` under `# Project Folder`. Creating it now ensures the folder
+> structure matches what AGENTS.md declares.
 
 ### Step 4 — Reference the CPA Core Vocabulary
 
-Open `docs/cpa-core-vocabulary.md` and confirm that the AI agent and human
-collaborators share the following minimum vocabulary:
+Read `docs/cpa-core-vocabulary.md` and confirm that you (the AI agent) and the
+user share the following minimum vocabulary before proceeding:
 
 - **Core** — The discovered domain model: pure types, invariants, and value objects.
 - **Projection** — A use-case-level view projected from Core; not an invention, but a selection.
@@ -91,35 +208,36 @@ collaborators share the following minimum vocabulary:
 
 ### Step 5 — Select or create an adapter
 
-Check `adapters/` for a folder matching your target language.
+Check `<project>/adapters/` for a folder matching the target language.
 
 - **If an adapter exists**: Read `adapters/<language>/README.md` and copy the
-  CPA Convergence section into your `AGENTS.md`.
+  CPA Convergence section into `AGENTS.md` (replacing the placeholder block).
 - **If no adapter exists**: Create `adapters/<language>/README.md` following the
-  structure described in `adapters/README.md`, then fill your `AGENTS.md`
-  CPA Convergence section accordingly.
+  structure described in `adapters/README.md`, then fill the CPA Convergence
+  section in `AGENTS.md` accordingly.
 
 ### Step 6 — Start the first PB iteration
 
-Open the AI agent session with `AGENTS.md` loaded.
-Instruct the agent to read `prompts/pb_iteration.md` and begin the first PB.
+Instruct yourself to read `prompts/pb_iteration.md` and begin PB-0001.
 
 ```
-Read prompts/pb_iteration.md and open PB-0001.
+Read <project>/prompts/pb_iteration.md and open PB-0001.
 ```
 
 ---
 
 ## Exit Conditions
 
-This skill is complete when:
+After completing all steps, verify each item below using your file tools.
+Report the full verification result to the user.
 
-- [ ] `AGENTS.md` exists in the target project with all placeholders filled,
-      including `PROJECT_SCALE`, `PROJECT_CATEGORY`, and `TOOL_INVOCATION_POLICY`.
-- [ ] `docs/`, `prompts/`, and `adapters/` exist in the target project.
-- [ ] `backlog/BACKLOG.md` and `backlog/STATUS.md` exist.
-- [ ] At least one PB folder exists with `PB-STATUS.md` and one `CR-XXXX.md`.
-- [ ] The AI agent session has loaded `AGENTS.md` and started the first PB.
+- [ ] `<project>/AGENTS.md` exists and contains no unfilled `{{PLACEHOLDER}}` values
+      (except `{{HOMEPAGE_URL}}` and `{{REPOSITORY_URL}}` if intentionally left as `(TBD)`).
+- [ ] `<project>/docs/`, `<project>/prompts/`, and `<project>/adapters/` exist.
+- [ ] `<project>/work/` exists.
+- [ ] `<project>/backlog/BACKLOG.md` and `<project>/backlog/STATUS.md` exist.
+- [ ] `<project>/backlog/PB-0001/PB-STATUS.md` and `<project>/backlog/PB-0001/CR-0001.md` exist.
+- [ ] You have loaded `<project>/AGENTS.md` into your context and started PB-0001.
 
 ---
 
