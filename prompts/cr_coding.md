@@ -8,6 +8,22 @@ belongs to** while coding.
 
 ---
 
+## Test Code Creation
+
+Based on the test cases extracted in the Design phase, create test code in
+parallel with the implementation.
+
+- [ ] Referred to the test case list in the Design section and implemented the
+      corresponding test cases.
+- [ ] Confirmed that test code placement is consistent with CPA layer
+      responsibilities:
+  - CoreModel tests: pure function tests (no side effects / I/O).
+  - ProjectedContext tests: effectful integration tests.
+- [ ] Confirmed that all test cases are covered by test code.
+- [ ] Test code exists before entering the Build phase (where tests are run).
+
+---
+
 ## Coding Conventions
 
 ### Comment Language

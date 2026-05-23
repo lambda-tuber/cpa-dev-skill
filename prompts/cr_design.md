@@ -16,6 +16,29 @@ phase. Record all design decisions in the **Design** section of `CR-XXXX.md`.
 
 ---
 
+## Test Design
+
+In the Design phase, define the test strategy alongside the implementation
+design, and record it in the **Design** section of `CR-XXXX.md`.
+
+### 1. Test Strategy
+
+- State what will be tested and at what granularity (unit, integration, E2E, etc.).
+- If any scope is explicitly excluded from testing, state the reason.
+
+### 2. Test Case Extraction
+
+- Produce a list of test cases corresponding to the changes or additions designed.
+- Each test case must specify: **target feature**, **input condition**, and **expected result**.
+
+### 3. Test Perspectives
+
+- Classify cases by perspective: normal path, error path, boundary values, etc.
+- If perspectives differ by CPA layer (e.g. CoreModel → pure function tests,
+  ProjectedContext → effectful integration tests), note that explicitly.
+
+---
+
 ## External Dependency Policy
 
 When using external libraries or packages, apply the following principles:

@@ -20,15 +20,17 @@ See docs/cpa-project-profile.md for definitions and selection guide.
 ---
 
 # Project Folder
-- {{WORKSPACE_PATH}}
-  - backlog : Backlog management folder
-  - mcp     : MCP server management folder (if applicable)
-  - work    : Application / middleware / library development folder
+- {{WORKSPACE_PATH}}  : defined as PROJECT_ROOT
+  - PROJECT_ROOT/backlog : Backlog management folder
+  - PROJECT_ROOT/mcp     : MCP server management folder (if applicable)
+  - PROJECT_ROOT/work    : Application / middleware / library development folder
+
+  > `PROJECT_ROOT` refers to the resolved value of `{{WORKSPACE_PATH}}`.
+  > Use `PROJECT_ROOT/...` notation when writing paths in any status or design document.
 
 ---
 
 # System Architecture
-
 Follow the CPA (Core Projection Architecture) fractal project structure:
 - https://github.com/lambda-tuber/core-projection-architecture/tree/main/cpa_thesis_appendix_B/05_cpa-fractal
 

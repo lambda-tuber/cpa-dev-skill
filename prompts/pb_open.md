@@ -9,13 +9,26 @@
 4. Create the PB folder (e.g. `backlog/PB-0001/`).
 5. Create `PB-STATUS.md` inside the PB folder. Decompose the PB requirements
    from BACKLOG.md into CRs and list them.
+   Fill in the **Work Folder** table using the following rules:
+   - Use `PROJECT_ROOT` (defined as `{{WORKSPACE_PATH}}` in `AGENTS.md` under `# Project Folder`) as the base.
+   - Write paths in `PROJECT_ROOT/...` notation, or use relative paths from the project root.
+   - Always include at minimum:
+     | Target | Path |
+     |--------|------|
+     | Deliverable (work) | `PROJECT_ROOT/work/<sub-folder>` |
+     | Backlog | `PROJECT_ROOT/backlog/PB-XXXX` |
+   - Add additional rows for any other folders relevant to this PB
+     (e.g. `mcp\`, `docs\`, a specific library sub-folder under `work\`).
 
 ## PB-STATUS.md Format
-
 ```markdown
 # PB-XXXX STATUS
+## Work Folder
+| Target | Path |
+|--------|------|
+| Deliverable (work) | `PROJECT_ROOT/work/<sub-folder>` |
+| Backlog | `PROJECT_ROOT/backlog/PB-XXXX` |
 ## Overview
-## CR List
 | CR ID | Title | Status | Notes |
 |-------|-------|--------|-------|
 | CR-01 | ...   | TODO   |       |
