@@ -10,9 +10,11 @@ foundation for all subsequent design and implementation work.
 
 1. Read the PB requirements in `backlog/BACKLOG.md` and the CR overview in
    `PB-STATUS.md`.
-2. Write the requirement details in the **Requirements** section of `CR-XXXX.md`.
-3. Complete the CPA perspective checks below and record the results in `CR-XXXX.md`.
-4. ⚠️ **Confirmation required**: Ask "Requirements are complete. May we proceed to
+2. Write the requirement details in `CR-XXXX_<title>/01_requirements.md`.
+3. Complete the CPA perspective checks below and record the results in
+   `CR-XXXX_<title>/01_requirements.md`.
+4. Update the CR status in `CR-XXXX_<title>/00_overview.md`.
+5. ⚠️ **Confirmation required**: Ask "Requirements are complete. May we proceed to
    the Design phase?" and wait for approval before continuing.
 
 ---

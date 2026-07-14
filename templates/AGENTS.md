@@ -48,9 +48,24 @@ For shared CPA vocabulary and layer responsibility definitions, refer to:
 - Iterative development is used.
 - Requirements are managed in `backlog/BACKLOG.md`. Management IDs use the format PB-NNNN (e.g. PB-0001, PB-0002).
 - PB implementation status is managed in `backlog/STATUS.md`.
-- Per-PB information is managed in `backlog/PB-XXXX/` folders (e.g. `backlog/PB-0001/`).
-- CR lists and status per PB are managed in `backlog/PB-XXXX/PB-STATUS.md`. Management IDs use the format CR-NNNN (e.g. CR-0001, CR-0002).
-- Each CR has its own Markdown file for requirements, progress, and status (e.g. `backlog/PB-0001/CR-0001.md`).
+- Per-PB information is managed in `backlog/PB-XXXX_<title>/` folders.
+  - Naming: `PB-XXXX_<title>` (4-digit zero-padded ID + underscore + short title)
+  - Example: `backlog/PB-0001_InitialSetup/`
+- CR lists and status per PB are managed in `backlog/PB-XXXX_<title>/PB-STATUS.md`.
+- Each CR is a **folder** containing phase files. Management IDs use the format CR-NNNN.
+  - Naming: `CR-XXXX_<title>` (4-digit zero-padded ID + underscore + short title)
+  - Example: `backlog/PB-0001_InitialSetup/CR-0001_CoreModelDesign/`
+  - Folder structure (5-file standard):
+    ```
+    CR-XXXX_<title>/
+      00_overview.md      ← CR-wide overview, background, deliverables, completion checklist (always required)
+      01_requirements.md  ← Requirements (R-XX) details
+      02_design.md        ← Design decisions and CPA layer declaration
+      03_dev_loop.md      ← Development loop log (coding / build / test)
+      04_close.md         ← Final completion check, work log, retrospective (always required)
+    ```
+  - `00_overview.md` and `04_close.md` are always created.
+    `02_design.md` and `03_dev_loop.md` may be omitted for documentation-only CRs.
 
 ## Iteration / Phase Transition Rules
 
@@ -59,8 +74,8 @@ Do not proceed autonomously to the next step without explicit instruction from t
 
 1. **Record the current state in the STATUS file**
    - Overall PB iteration status → `backlog/STATUS.md`
-   - Per-CR status → `backlog/PB-XXXX/PB-STATUS.md`
-   - Detailed CR status → `backlog/PB-XXXX/CR-XXXX.md`
+   - Per-CR status → `backlog/PB-XXXX_<title>/PB-STATUS.md`
+   - Detailed CR status → `backlog/PB-XXXX_<title>/CR-XXXX_<title>/00_overview.md`
 
 2. **Load the detail file for the next iteration / phase**
    - Read the corresponding `prompts/*.md` file before starting work.

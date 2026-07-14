@@ -15,10 +15,10 @@ until all completion criteria are met. Refer to the sub-phase prompts for detail
 
 ## Loop Flow
 
-1. Perform coding and update the **Coding** checkbox in `CR-XXXX.md` to `[x]`.
-2. Run the build and record the result in `CR-XXXX.md`. Mark **Build** `[x]` on
+1. Perform coding and update the **Coding** checkbox in `CR-XXXX_<title>/03_dev_loop.md` to `[x]`.
+2. Run the build and record the result in `CR-XXXX_<title>/03_dev_loop.md`. Mark **Build** `[x]` on
    success.
-3. Run the tests and record the result in `CR-XXXX.md`. Mark **Test** `[x]` on
+3. Run the tests and record the result in `CR-XXXX_<title>/03_dev_loop.md`. Mark **Test** `[x]` on
    success.
 4. If build or test fails, return to coding, fix the issue, and repeat the cycle.
 5. When all checkboxes are complete, refer to `prompts/cr_close.md` to close

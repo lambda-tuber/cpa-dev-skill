@@ -10,7 +10,8 @@ phase. Record all design decisions in the **Design** section of `CR-XXXX.md`.
 ## Steps
 
 1. Use the affected layers identified in Requirements as the basis for design.
-2. Apply the CPA perspectives below and record the design in `CR-XXXX.md`.
+2. Apply the CPA perspectives below and record the design in
+   `CR-XXXX_<title>/02_design.md`.
 3. ⚠️ **Confirmation required**: Ask "Design is complete. May we proceed to the
    Coding phase?" and wait for approval before continuing.
 

@@ -1,3 +1,15 @@
+---
+name: cpa-dev-skill
+description: >
+  Apply this skill when designing, refactoring, or analyzing software architecture based on Core Projection Architecture (CPA). 
+  CPA is a retroactive structural design methodology. Trigger this skill to enforce its core principles: 
+  1. "Existence Discovery" (identifying immutable core domain truths).
+  2. "Contextual Projection" (projecting the core into specific use cases or contexts without altering the core).
+  3. "Retro-dependencies" (structuring dependencies so that contexts strictly depend on the core, never the reverse).
+  Use this for domain modeling, decoupling complex systems, and establishing robust boundary rules.
+---
+
+
 # SKILL: Start CPA-compliant development for \<project\>
 
 ---

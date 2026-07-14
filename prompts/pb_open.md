@@ -6,7 +6,7 @@
 2. ⚠️ **Confirmation required**: Summarize the BACKLOG.md content and the chosen
    PB, then ask: "Shall we start PB-XXXX?" — wait for approval before proceeding.
 3. Update `backlog/STATUS.md` and set the PB status to **In Progress**.
-4. Create the PB folder (e.g. `backlog/PB-0001/`).
+4. Create the PB folder using the naming convention below.
 5. Create `PB-STATUS.md` inside the PB folder. Decompose the PB requirements
    from BACKLOG.md into CRs and list them.
    Fill in the **Work Folder** table using the following rules:
@@ -19,6 +19,22 @@
      | Backlog | `PROJECT_ROOT/backlog/PB-XXXX` |
    - Add additional rows for any other folders relevant to this PB
      (e.g. `mcp\`, `docs\`, a specific library sub-folder under `work\`).
+
+## PB Folder Naming Convention
+
+PB folders include a short title after the ID:
+
+```
+backlog/PB-XXXX_<title>/
+```
+
+- Format: `PB-XXXX_<title>` (4-digit zero-padded ID + underscore + short title)
+- Example: `backlog/PB-0005_CPADevSkillConstruction/`
+- The title should be concise (no spaces; use CamelCase or underscores).
+- CR folders inside the PB folder follow the same convention: `CR-XXXX_<title>/`.
+  See `prompts/cr_open.md` for the CR folder structure.
+
+---
 
 ## PB-STATUS.md Format
 ```markdown
